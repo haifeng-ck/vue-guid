@@ -1,9 +1,4 @@
-# vue-guid
-
-## 项目结构
-
-```markdown
-|-- vue-guid
+|-- undefined
     |-- .gitignore
     |-- README.md
     |-- .idea
@@ -13,4 +8,3 @@
     |   |-- vue-guid.iml
     |   |-- workspace.xml
     |-- essentials
-```
