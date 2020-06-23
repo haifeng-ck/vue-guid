@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Component2-嵌套组件</title>
+</head>
+<body>
+<div id="app">
+    <todo-list></todo-list>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /**
+     * 组件嵌套
+     * */
+    Vue.component('todo-item', {
+        props: {
+            title: String,
+            del: {
+                type: Boolean,
+                default: false
+            }
+        },
+        template: `
+            <li>
+                <span v-if="!del">{{ title }}</span>
+                <span v-else style="text-decoration: line-through">{{ title }}</span>
+                <button v-if="!del">删除</button>
+            </li>
+        `
+    })
+
+    Vue.component('todo-list', {
+        template: `
+            <ol>
+                <todo-item
+                        v-for="item in list"
+                        :key="item.id"
+                        :title="item.title"
+                        :del="item.del"
+                ></todo-item>
+            </ol>
+        `,
+        data() { // 组件中的data需要使用函数，而根实例的data没有必要使用函数
+            return {
+                list: [
+                    {
+                        id: '00',
+                        title: 'hello world',
+                        del: false
+                    },
+                    {
+                        id: '01',
+                        title: 'hello vue',
+                        del: false
+                    },
+                    {
+                        id: '03',
+                        title: 'hello everyOne',
+                        del: false
+                    }
+                ]
+            }
+        }
+    })
+
+    const vm = new Vue({
+        el: '#app'
+    })
+</script>
+</body>
+</html>
