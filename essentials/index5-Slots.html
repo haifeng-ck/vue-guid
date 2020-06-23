@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slots</title>
+</head>
+<body>
+<h4>插槽 Slots</h4>
+<hr>
+<div id="app">
+    <todo-list>
+        <todo-item
+                v-for="item in list"
+                :key="item.id"
+                :title="item.title"
+                :del="item.del"
+                @delete="handleDelete(item.id)"
+                @reset="item.del = false"
+        >
+            <!-- Vue 2.5.x 语法 -->
+            <span slot="pre-icon">🐟</span>
+            <span slot="sub-icon">✈</span>
+            <!-- Vue 2.6.x + 语法 -->
+            <template v-slot:last-icon="{ value }">
+                <span>🧠{{ value }}</span>
+            </template>
+        </todo-item>
+    </todo-list>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('todo-item', {
+        props: {
+            title: String,
+            del: {
+                type: Boolean,
+                default: false
+            }
+        },
+        data() {
+            return {
+                value: Math.random()
+            }
+        },
+        template: `
+            <li>
+                <slot name="pre-icon">😀</slot>
+                <span v-if="!del">{{ title }}</span>
+                <span v-else style="text-decoration: line-through">{{ title }}</span>
+                <slot name="sub-icon">🆒</slot>
+                <button v-if="!del" @click="$emit('delete')">删除</button>
+                <slot name="last-icon" :value="value">🐕</slot>
+                <button v-if="del" @click="$emit('reset')">恢复</button>
+            </li>
+        `
+    })
+
+    Vue.component('todo-list', {
+        template: `
+            <ol>
+                <slot></slot>
+            </ol>
+        `
+    })
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            list: [
+                {
+                    id: '00',
+                    title: 'love vue',
+                    del: false
+                },
+                {
+                    id: '01',
+                    title: 'love javaScript',
+                    del: false
+                },
+                {
+                    id: '02',
+                    title: 'do you love vue ?',
+                    del: false
+                },
+                {
+                    id: '03',
+                    title: 'give up',
+                    del: false
+                }
+            ]
+        },
+        methods: {
+            handleDelete(id) {
+                this.list.map(item => {
+                    if (item.id === id) item.del = true
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
