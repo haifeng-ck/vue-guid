@@ -42,17 +42,17 @@
     /**
      * 声明式渲染 Declarative Rendering (绑定数据到DOM文本)
      * */
-    var app = new Vue({
+    const app = new Vue({
         el: '#app',
         data: {
             message: 'Hello World!'
         }
-    })
+    });
 
     /**
      * 绑定元素属性 attribute (绑定数据到DOM attribute)
      * */
-    var app2 = new Vue({
+    const app2 = new Vue({
         el: '#app-2',
         data: {
             message: '动态绑定attribute'
@@ -62,7 +62,7 @@
     /**
      * 条件与循环 Conditionals and Loops (绑定数据到DOM结构)
      * */
-    var app3 = new Vue({
+    const app3 = new Vue({
         el: '#app-3',
         data: {
             list: [
